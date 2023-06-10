@@ -19,6 +19,11 @@ export interface InvoiceItem {
   rate: number;
 }
 
+export interface Invoice {
+  id: string;
+  items: InvoiceItem[];
+}
+
 class Client {
   jsonRequest: <A, B>(props: JsonRequestProps<B>) => Promise<A>;
 
@@ -56,7 +61,10 @@ class Client {
     return this.jsonRequest({ path, method: "POST", data: { data } });
   };
 
-  invoiceInsert = async (addressId: number, items: InvoiceItem[]) => {
+  invoiceInsert = async (
+    addressId: number,
+    items: InvoiceItem[]
+  ): Promise<{ uuid: string }> => {
     const path = "/invoice/insert";
     const data = {
       address: { id: addressId },
@@ -78,6 +86,16 @@ class Client {
 
   invoiceDetail = async (id: string) =>
     this.jsonRequest({ path: "/invoice/detail", method: "POST", data: { id } });
+
+  invoiceDelete = async (uuid: string) =>
+    this.jsonRequest({
+      path: "/invoice/delete",
+      method: "POST",
+      data: { uuid },
+    });
+
+  invoiceList = async (): Promise<Invoice[]> =>
+    this.jsonRequest({ path: "/invoice/list" });
 }
 
 export default Client;

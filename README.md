@@ -4,6 +4,17 @@
 
 The Admin as a Service (AaaS) client is a JavaScript client designed to connect to Digis' modules via the AaaS API. It's perfect for any application that requires administration service automation.
 
+## Get started / example
+
+see `src/main.ts`
+
+note that if you use it as is you need to run
+
+```
+yarn build # builds a new version
+yarn start MYTOKEN
+```
+
 ## Live Server API Endpoint
 
 [https://app.digis.ch/api](https://app.digis.ch/api)

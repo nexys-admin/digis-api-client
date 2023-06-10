@@ -1,4 +1,4 @@
-import Client from "./client";
+import Client, { Address, Country, InvoiceItem } from "./client";
 
 // this is an example of how the client can be used
 
@@ -8,10 +8,10 @@ import Client from "./client";
  */
 const { argv: args } = process;
 
-const main = () => {
+const main = async () => {
   if (args.length <= 2) {
     console.warn("token must be passed as arg");
-    return;
+    throw Error("token must be defined");
   }
 
   const token = args[2];
@@ -20,24 +20,38 @@ const main = () => {
 
   client.viewAPIVersion().then(console.log);
   client.getProfile().then(console.log);
-  //companyInsert().then(console.log);
-  //addressInsert("7d9826c7-077f-11ee-859f-42010aac0014").then(console.log);
-  //invoiceInsert(451, [{ label: "d", rate: 23, quantity: 3 }]).then(console.log);
 
-  client
-    .invoiceDetail("757f8dfb-0780-11ee-859f-42010aac0014")
-    .then(console.log);
+  // insert a new invoice with a new company, new address
+  const items: InvoiceItem[] = [{ label: "d", rate: 23, quantity: 3 }];
+  const address: Address = {
+    street: "Route des cerises",
+    city: "Morges",
+    zip: "1111",
+    country: { id: Country.Switzerland },
+  };
+  const companyName = "my company";
+
+  const { uuid: invoiceId } = await client.invoiceInsertWithNewCompany(
+    companyName,
+    address,
+    items
+  );
+
+  console.log("invoice with uuid", invoiceId, "created");
+
+  const invoiceDetail = await client.invoiceDetail(invoiceId);
+
+  console.log("invoice detail", invoiceDetail);
+
+  // display invoice list
+  const invoiceList = await client.invoiceList();
+  console.log(
+    "invoice list",
+    invoiceList.map((x) => x.id)
+  );
+
+  // delete invoice that was newly created
+  return client.invoiceDelete(invoiceId);
 };
 
-main();
-
-/*
-const items = [{ label: "d", rate: 23, quantity: 3 }];
-const address = {
-  street: "Route des cerises",
-  city: "Morges",
-  zip: "1111",
-  country: { id: 1 },
-};
-const companyName = "my company";
-//invoiceInsertWithNewCompany(companyName, address, items).then(console.log);*/
+main().then(console.log);
