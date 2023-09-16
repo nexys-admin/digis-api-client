@@ -1,11 +1,12 @@
 {
-  "name":"@nexys/digis-api-client",
+  "name": "@nexys/digis-api-client",
   "version": "0.0.0",
-  "license":"MIT",
+  "license": "MIT",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "files":"dist/",
+  "files": "dist/",
   "scripts": {
+    "buildPackage": "tsc -p ./tsconfig.package.json",
     "build": "tsc",
     "start": "node ./dist/main.js"
   },
