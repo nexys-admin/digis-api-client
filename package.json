@@ -1,4 +1,7 @@
 {
+  "name":"@nexys/digis-api-client",
+  "license":"MIT",
+  "files":"dist/",
   "scripts": {
     "build": "tsc",
     "start": "node ./dist/main.js"
