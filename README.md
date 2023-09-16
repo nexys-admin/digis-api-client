@@ -1,5 +1,9 @@
 # Digis Admin as a Service (AaaS) Client
 
+[![NPM package](https://badge.fury.io/js/%40nexys%2Fdigis-api-client.svg)](https://www.npmjs.com/package/@nexys/digis-api-client)
+[![NPM package](https://img.shields.io/npm/v/@nexys/digis-api-client.svg)](https://www.npmjs.com/package/@nexys/digis-api-client)
+[![Prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://prettier.io/)
+
 ## Description
 
 The Admin as a Service (AaaS) client is a JavaScript client designed to connect to Digis' modules via the AaaS API. It's perfect for any application that requires administration service automation.
