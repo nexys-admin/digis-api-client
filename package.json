@@ -4,11 +4,15 @@
   "license": "MIT",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "files": "dist/",
+  "files": [
+    "dist/*",
+    "README.md"
+  ],
   "scripts": {
     "buildPackage": "tsc -p ./tsconfig.package.json",
     "build": "tsc",
-    "start": "node ./dist/main.js"
+    "start": "node ./dist/main.js",
+    "test": "echo \"no tests yet\""
   },
   "devDependencies": {
     "@types/node": "^20.2.6",
