@@ -56,7 +56,7 @@ class Client {
   const getCompanies = async () => this.jsonRequest({ path: "/company/list" });
 
   //
-  addressList = async (data:{company:{uuid:string}) => {
+  addressList = async (data: { company:{ uuid:string }}) => {
     const path = "/address/list";
     const method = 'POST';
     return this.jsonRequest({ path, method, data });
