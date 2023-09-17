@@ -6,6 +6,12 @@ export enum Country {
   Switzerland = 1,
 }
 
+export enum InvoiceStatus {
+  pending = 1,
+  sent = 2
+  //... more status
+}
+
 export interface Address {
   street: string;
   city: string;
@@ -47,6 +53,14 @@ class Client {
 
     return this.jsonRequest({ path, method: "POST", data: { data } });
   };
+  const getCompanies = async () => this.jsonRequest({ path: "/company/list" });
+
+  //
+  addressList = async (data:{company:{uuid:string}) => {
+    const path = "/address/list";
+    const method = 'POST';
+    return this.jsonRequest({ path, method, data });
+  };
 
   addressInsert = async (
     companyId: string,
@@ -61,18 +75,23 @@ class Client {
     return this.jsonRequest({ path, method: "POST", data: { data } });
   };
 
-  invoiceInsert = async (
-    addressId: number,
-    items: InvoiceItem[]
-  ): Promise<{ uuid: string }> => {
+  invoiceInsert = async (data:{
+    address: { id: number },
+    items: InvoiceItem[],
+    refNumber?: string,
+    refNumberInt?: number,
+    status: InvoiceStatus,
+  }): Promise<{ uuid: string }> => {
     const path = "/invoice/insert";
-    const data = {
-      address: { id: addressId },
-      items,
-    };
 
     return this.jsonRequest({ path, method: "POST", data: { data } });
   };
+
+  insertInvoice = async (data) =>  this.jsonRequest({
+    method: "POST",
+    path: "/invoice/insert",
+    data,
+  });
 
   invoiceInsertWithNewCompany = async (
     companyName: string,
@@ -96,6 +115,8 @@ class Client {
 
   invoiceList = async (): Promise<Invoice[]> =>
     this.jsonRequest({ path: "/invoice/list" });
+
+  
 }
 
 export default Client;
