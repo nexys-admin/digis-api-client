@@ -1,6 +1,7 @@
 # Digis Admin as a Service (AaaS) Client
 
 [![Test](https://github.com/nexys-admin/digis-api-client/actions/workflows/test.yml/badge.svg)](https://github.com/nexys-admin/digis-api-client/actions/workflows/test.yml)
+[![Publish](https://github.com/nexys-admin/digis-api-client/actions/workflows/publish.yml/badge.svg)](https://github.com/nexys-admin/digis-api-client/actions/workflows/publish.yml)
 [![NPM package](https://badge.fury.io/js/%40nexys%2Fdigis-api-client.svg)](https://www.npmjs.com/package/@nexys/digis-api-client)
 [![NPM package](https://img.shields.io/npm/v/@nexys/digis-api-client.svg)](https://www.npmjs.com/package/@nexys/digis-api-client)
 [![Prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://prettier.io/)
