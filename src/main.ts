@@ -1,4 +1,4 @@
-import Client, { Address, Country, InvoiceItem } from "./client";
+import Client, { Type as T } from "./client";
 
 // this is an example of how the client can be used
 
@@ -22,12 +22,12 @@ const main = async () => {
   client.getProfile().then(console.log);
 
   // insert a new invoice with a new company, new address
-  const items: InvoiceItem[] = [{ label: "d", rate: 23, quantity: 3 }];
-  const address: Address = {
+  const items: T.InvoiceItem[] = [{ label: "d", rate: 23, quantity: 3 }];
+  const address: T.Address = {
     street: "Route des cerises",
     city: "Morges",
     zip: "1111",
-    country: { id: Country.Switzerland },
+    country: { id: T.Country.Switzerland },
   };
   const companyName = "my company";
 

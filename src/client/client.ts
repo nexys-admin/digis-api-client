@@ -84,6 +84,19 @@ class Client {
 
   invoiceList = async (): Promise<T.Invoice[]> =>
     this.jsonRequest({ path: "/invoice/list" });
+
+  // accounting module
+  accountingAccountList = async () => {
+    const path = "/accounting/account/list";
+
+    return this.jsonRequest({ path });
+  };
+
+  accountingEntryInsert = async (data: T.AccountingEntry) => {
+    const path = "/accounting/account/entry/insert";
+
+    return this.jsonRequest({ path, method: "POST", data });
+  };
 }
 
 export default Client;
