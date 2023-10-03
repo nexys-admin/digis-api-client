@@ -86,10 +86,15 @@ class Client {
     this.jsonRequest({ path: "/invoice/list" });
 
   // accounting module
-  accountingAccountList = async () => {
+  accountingAccountList = async (): Promise<T.AccountingAccount[]> => {
     const path = "/accounting/account/list";
 
     return this.jsonRequest({ path });
+  };
+
+  accountingAccountsMap = async () => {
+    const list = await this.accountingAccountList();
+    return new Map(list.map(({ number, id }) => [number, id]));
   };
 
   accountingEntryInsert = async (data: T.AccountingEntry) => {

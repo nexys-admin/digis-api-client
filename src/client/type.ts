@@ -27,6 +27,12 @@ export interface Invoice {
 }
 
 // accounting
+export interface AccountingAccount {
+  number: number;
+  id: number;
+  name: string;
+}
+
 export interface AccountingEntryMeta {
   account: { id: number };
   company?: { uuid: string };
