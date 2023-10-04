@@ -43,7 +43,7 @@ export interface AccountingEntryMeta {
 }
 
 export interface AccountingEntryAccount extends AccountingEntryMeta {
-  direction: number; // 1 | -1
+  direction: 1 | -1;
   amount: number;
   originalAmount?: number;
 }
@@ -54,4 +54,9 @@ export interface AccountingEntry {
   group?: { id: number };
   number?: number;
   entryAccounts: AccountingEntryAccount[];
+}
+
+export interface AccountingEntryGroup {
+  id: number;
+  description?: string;
 }

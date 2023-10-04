@@ -102,6 +102,20 @@ class Client {
 
     return this.jsonRequest({ path, method: "POST", data });
   };
+
+  accountingEntryGroupInsert = async (
+    data: Omit<T.AccountingEntryGroup, "id">
+  ) =>
+    this.jsonRequest({
+      path: "/accounting/group/insert",
+      method: "POST",
+      data,
+    });
+
+  accountingEntryGroupList = async () =>
+    this.jsonRequest({
+      path: "/accounting/group/list",
+    });
 }
 
 export default Client;
