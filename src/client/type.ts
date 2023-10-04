@@ -60,3 +60,12 @@ export interface AccountingEntryGroup {
   id: number;
   description?: string;
 }
+
+export interface AccountingBalanceProps {
+  endDate: string;
+  startDate: string;
+  accountIds?: number[];
+  onlyNonZero?: boolean;
+  onlyWithAtLeastOneTx?: boolean;
+  excludeTransactionIds?: number[];
+}

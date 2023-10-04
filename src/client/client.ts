@@ -116,6 +116,21 @@ class Client {
     this.jsonRequest({
       path: "/accounting/group/list",
     });
+
+  accountingBalance = async (
+    data: T.AccountingBalanceProps
+  ): Promise<
+    {
+      account_id: number;
+      account_number: number;
+      account_name: string;
+      currency_id: number;
+      cum_amount: number;
+      count_ea: number;
+      count_e: number;
+    }[]
+  > =>
+    this.jsonRequest({ path: "/accounting/balance/get", method: "POST", data });
 }
 
 export default Client;
