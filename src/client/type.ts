@@ -68,4 +68,5 @@ export interface AccountingBalanceProps {
   onlyNonZero?: boolean;
   onlyWithAtLeastOneTx?: boolean;
   excludeTransactionIds?: number[];
+  excludeGroupIds?: number[];
 }

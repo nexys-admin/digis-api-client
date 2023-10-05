@@ -131,6 +131,9 @@ class Client {
     }[]
   > =>
     this.jsonRequest({ path: "/accounting/balance/get", method: "POST", data });
+
+  accountingBalanceEntryCheck = async () =>
+    this.jsonRequest({ path: "/accounting/balance/check" });
 }
 
 export default Client;
