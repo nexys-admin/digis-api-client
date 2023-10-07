@@ -97,11 +97,19 @@ class Client {
     return new Map(list.map(({ number, id }) => [number, id]));
   };
 
-  accountingEntryInsert = async (data: T.AccountingEntry) => {
-    const path = "/accounting/account/entry/insert";
+  accountingEntryAccountList = async (filters: T.EntryAccountProps) =>
+    this.jsonRequest({
+      path: "/accounting/entry/account/list",
+      method: "POST",
+      data: { filters },
+    });
 
-    return this.jsonRequest({ path, method: "POST", data });
-  };
+  accountingEntryInsert = async (data: T.AccountingEntry) =>
+    this.jsonRequest({
+      path: "/accounting/account/entry/insert",
+      method: "POST",
+      data,
+    });
 
   accountingEntryGroupInsert = async (
     data: Omit<T.AccountingEntryGroup, "id">

@@ -70,3 +70,11 @@ export interface AccountingBalanceProps {
   excludeTransactionIds?: number[];
   excludeGroupIds?: number[];
 }
+
+export interface EntryAccountProps {
+  transactionGroup?: { id: number };
+  account?: { id: number };
+  entry?: { id: number };
+  payable?: { uuid: string };
+  invoice?: { uuid: string };
+}
