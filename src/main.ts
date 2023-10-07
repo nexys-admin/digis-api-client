@@ -16,7 +16,7 @@ const main = async () => {
 
   const token = args[2];
 
-  const client = new Client(token);
+  const client = new Client({ token });
 
   client.viewAPIVersion().then(console.log);
   client.getProfile().then(console.log);

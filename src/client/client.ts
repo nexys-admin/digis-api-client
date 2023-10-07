@@ -4,17 +4,25 @@ import { JsonRequestProps, jsonRequestGeneric } from "./utils";
 
 import * as T from "./type";
 
+interface ClientOptions {
+  url?: string; // prefix url used for all reuquests
+  token?: string; // if token is given, request will contain headers.authorization
+}
+
 class Client {
   jsonRequest: <A, B>(props: JsonRequestProps<B>) => Promise<A>;
 
-  constructor(
-    token: string,
-    url: string = "https://app.digis.ch/api" // "http://localhost:3001";
-  ) {
-    const headers = {
-      authorization: "bearer " + token,
+  constructor(options: ClientOptions = {}) {
+    // get url from optioms, set defauot is unset
+    const { url = "https://app.digis.ch/api" } = options;
+
+    const headers: { [k: string]: string } = {
       "content-type": "application/json",
     };
+
+    if (options.token && typeof options.token) {
+      headers["authorization"] = "bearer " + options.token;
+    }
 
     this.jsonRequest = jsonRequestGeneric(url, headers);
   }
@@ -104,13 +112,6 @@ class Client {
       data: { filters },
     });
 
-  accountingEntryInsert = async (data: T.AccountingEntry) =>
-    this.jsonRequest({
-      path: "/accounting/account/entry/insert",
-      method: "POST",
-      data,
-    });
-
   accountingEntryGroupInsert = async (
     data: Omit<T.AccountingEntryGroup, "id">
   ) =>
@@ -142,6 +143,58 @@ class Client {
 
   accountingBalanceEntryCheck = async () =>
     this.jsonRequest({ path: "/accounting/balance/check" });
+
+  //
+
+  accountingEntryInsert = async (data: T.AccountingEntry) =>
+    this.jsonRequest({
+      path: "/accounting/account/entry/insert",
+      method: "POST",
+      data,
+    });
+
+  accountingEntryInsert2 = (
+    data: T.EntryInput
+  ): Promise<{ entry: { id: number } }> => {
+    return this.jsonRequest({
+      path: "/accounting/entry/insert",
+      method: "POST",
+      data,
+    });
+  };
+
+  accountingEntryupdate = (id: number, entry: T.EntryInput) => {
+    const { entryAccounts, dateLedger, description } = entry;
+
+    const dataToUpdate = {
+      entryAccounts,
+      dateLedger,
+      description,
+    };
+
+    return this.jsonRequest({
+      path: "/accounting/entry/update",
+      method: "POST",
+      data: {
+        id,
+        data: dataToUpdate,
+      },
+    });
+  };
+
+  accountingEntryDetail = (id: number): Promise<T.Entry> =>
+    this.jsonRequest({
+      path: "/accounting/entry/detail",
+      method: "POST",
+      data: { id },
+    });
+
+  accountingEntryDeleteById = (id: number) =>
+    this.jsonRequest({
+      path: "/accounting/entry/delete",
+      method: "POST",
+      data: { id },
+    });
 }
 
 export default Client;

@@ -1,3 +1,18 @@
+export enum Currency {
+  CHF = 1,
+  USD = 2,
+  EUR = 3,
+  GBP = 4,
+  USDT = 5,
+  SOL = 6,
+  USDC = 7,
+}
+
+export enum DebitCredit {
+  debit = 1,
+  credit = -1,
+}
+
 export enum Country {
   Switzerland = 1,
 }
@@ -5,6 +20,8 @@ export enum Country {
 export enum InvoiceStatus {
   pending = 1,
   sent = 2,
+  paid = 3,
+  denied = 4,
   //... more status
 }
 
@@ -77,4 +94,41 @@ export interface EntryAccountProps {
   entry?: { id: number };
   payable?: { uuid: string };
   invoice?: { uuid: string };
+}
+
+export interface EntryInput {
+  number: number;
+  dateLedger: string;
+  description?: string;
+  entryAccounts: {
+    account: { id: number };
+    amount: number;
+    direction: number;
+  }[];
+}
+
+export interface AccountingEntryAccountMeta {
+  invoice: { uuid: string; refNumberInt: number };
+  payable: { uuid: string };
+  transactionGroup: { id: number };
+  company: { uuid: string; name: string };
+}
+
+export interface AccountingEntryAccount2å
+  extends Partial<AccountingEntryAccountMeta> {
+  account: { id: number; name: string; number: number };
+  id: number;
+  amount: number;
+  currency: Currency;
+  direction: DebitCredit;
+  exchangeRate: 1;
+  externalReference: null;
+}
+
+export interface Entry {
+  id: number;
+  number: number;
+  dateLedger: string;
+  description?: string;
+  AccountingEntryAccount: AccountingEntryAccount[];
 }
