@@ -5,7 +5,11 @@ export interface JsonRequestProps<B> {
 }
 
 export const jsonRequestGeneric =
-  <A, B = any>(url: string, headers: { [k: string]: string }) =>
+  <A, B = any>(
+    url: string,
+    headers: { [k: string]: string },
+    options: { displayRequestStatusLog?: boolean } = {}
+  ) =>
   async ({
     path,
     method = "GET",
@@ -13,6 +17,10 @@ export const jsonRequestGeneric =
   }: JsonRequestProps<B>): Promise<A> => {
     const body = data && JSON.stringify(data);
     const response = await fetch(url + path, { headers, method, body });
-    console.log("status for path", path, response.status);
+
+    if (options.displayRequestStatusLog) {
+      console.log("status for path", path, response.status);
+    }
+
     return response.json();
   };

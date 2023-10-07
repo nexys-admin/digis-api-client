@@ -7,6 +7,7 @@ import * as T from "./type";
 interface ClientOptions {
   url?: string; // prefix url used for all reuquests
   token?: string; // if token is given, request will contain headers.authorization
+  displayRequestStatusLog?: boolean;
 }
 
 class Client {
@@ -14,7 +15,8 @@ class Client {
 
   constructor(options: ClientOptions = {}) {
     // get url from optioms, set defauot is unset
-    const { url = "https://app.digis.ch/api" } = options;
+    const { url = "https://app.digis.ch/api", displayRequestStatusLog } =
+      options;
 
     const headers: { [k: string]: string } = {
       "content-type": "application/json",
@@ -24,7 +26,9 @@ class Client {
       headers["authorization"] = "bearer " + options.token;
     }
 
-    this.jsonRequest = jsonRequestGeneric(url, headers);
+    this.jsonRequest = jsonRequestGeneric(url, headers, {
+      displayRequestStatusLog,
+    });
   }
 
   viewAPIVersion = async () => this.jsonRequest({ path: "/meta/version" });
