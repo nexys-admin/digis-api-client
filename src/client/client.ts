@@ -149,15 +149,7 @@ class Client {
     this.jsonRequest({ path: "/accounting/balance/check" });
 
   //
-
-  accountingEntryInsert = async (data: T.AccountingEntry) =>
-    this.jsonRequest({
-      path: "/accounting/account/entry/insert",
-      method: "POST",
-      data,
-    });
-
-  accountingEntryInsert2 = (
+  accountingEntryInsert = (
     data: T.EntryInput
   ): Promise<{ entry: { id: number } }> => {
     return this.jsonRequest({
