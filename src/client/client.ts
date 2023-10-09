@@ -145,6 +145,26 @@ class Client {
   > =>
     this.jsonRequest({ path: "/accounting/balance/get", method: "POST", data });
 
+  accountingBalanceMulti = async (
+    data: Omit<T.AccountingBalanceProps, "endDate"> & { endDates: string[] }
+  ): Promise<
+    {
+      date_snapshot: string;
+      account_id: number;
+      account_number: number;
+      account_name: string;
+      currency_id: number;
+      cum_amount: number;
+      count_ea: number;
+      count_e: number;
+    }[]
+  > =>
+    this.jsonRequest({
+      path: "/accounting/balance/get/multi",
+      method: "POST",
+      data,
+    });
+
   accountingBalanceEntryCheck = async () =>
     this.jsonRequest({ path: "/accounting/balance/check" });
 

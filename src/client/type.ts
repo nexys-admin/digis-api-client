@@ -80,7 +80,7 @@ export interface AccountingEntryGroup {
 
 export interface AccountingBalanceProps {
   endDate: string;
-  startDate: string;
+  startDate?: string;
   accountIds?: number[];
   onlyNonZero?: boolean;
   onlyWithAtLeastOneTx?: boolean;
