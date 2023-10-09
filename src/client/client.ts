@@ -15,8 +15,7 @@ class Client {
 
   constructor(options: ClientOptions = {}) {
     // get url from optioms, set defauot is unset
-    const { url = "https://app.digis.ch/api", displayRequestStatusLog } =
-      options;
+    const { url = "", displayRequestStatusLog } = options;
 
     const headers: { [k: string]: string } = {
       "content-type": "application/json",
