@@ -141,4 +141,5 @@ export interface AccountingBalanceOut {
   cum_amount: number;
   count_ea: number;
   count_e: number;
+  date_snapshot: string;
 }
