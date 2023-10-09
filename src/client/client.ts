@@ -14,8 +14,8 @@ class Client {
   jsonRequest: <A, B>(props: JsonRequestProps<B>) => Promise<A>;
 
   constructor(options: ClientOptions = {}) {
-    // get url from optioms, set defauot is unset
-    const { url = "", displayRequestStatusLog } = options;
+    // get url from optioms, default url is for frontend
+    const { url = "/api", displayRequestStatusLog } = options;
 
     const headers: { [k: string]: string } = {
       "content-type": "application/json",
