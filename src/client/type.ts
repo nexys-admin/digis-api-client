@@ -132,3 +132,13 @@ export interface Entry {
   description?: string;
   AccountingEntryAccount: AccountingEntryAccount[];
 }
+
+export interface AccountingBalanceOut {
+  account_id: number;
+  account_number: number;
+  account_name: string;
+  account_currency_id: number;
+  cum_amount: number;
+  count_ea: number;
+  count_e: number;
+}
