@@ -138,7 +138,11 @@ export interface AccountingBalanceOut {
   account_number: number;
   account_name: string;
   account_currency_id: number;
-  cum_amount: number;
+  sum_base: number;
+  sum_base_trade: number;
+  sum_native: number;
+  sum_native_net: number;
+  sum_native_trade: number;
   count_ea: number;
   count_e: number;
   date_snapshot: string;
