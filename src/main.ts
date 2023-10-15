@@ -47,7 +47,7 @@ const main = async () => {
   const invoiceList = await client.invoiceList();
   console.log(
     "invoice list",
-    invoiceList.map((x) => x.id)
+    invoiceList.map((x) => x.uuid)
   );
 
   // delete invoice that was newly created
