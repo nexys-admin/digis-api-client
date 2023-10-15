@@ -22,7 +22,6 @@ export enum InvoiceStatus {
   sent = 2,
   paid = 3,
   denied = 4,
-  //... more status
 }
 
 export interface Address {
@@ -30,6 +29,46 @@ export interface Address {
   city: string;
   zip: string;
   country: { id: Country };
+}
+
+export interface InvoiceListUnit {
+  uuid: string;
+  currency: number;
+  sender: string;
+  key: string;
+  statusId: InvoiceStatus;
+  refNumberInt: number;
+  langId: number;
+  additionalInformation: string;
+  date: string;
+  dateDue: string | null;
+  logDateAdded: string;
+  vat: number;
+  vatIncluded: null | boolean;
+  discount: null | number;
+  discountAbs: null | number;
+  paymentUrl: string | null;
+  instance: {
+    uuid: string;
+  };
+  address: {
+    id: number;
+    street: string;
+    zip: string;
+    city: string;
+    company: {
+      uuid: string;
+      name: string;
+    };
+  };
+  project: null | any; // You can replace `any` with a more specific type if you have one
+  paymentProfile: {
+    id: number;
+    type: number;
+    iban: string;
+    bankingReferenceNumber: string | null;
+    account: AccountingAccount;
+  };
 }
 
 export interface InvoiceItem {
@@ -45,8 +84,8 @@ export interface Invoice {
 
 // accounting
 export interface AccountingAccount {
-  number: number;
   id: number;
+  number: number;
   name: string;
 }
 
@@ -116,7 +155,7 @@ export interface AccountingEntryAccountMeta {
 
 export interface AccountingEntryAccount2å
   extends Partial<AccountingEntryAccountMeta> {
-  account: { id: number; name: string; number: number };
+  account: AccountingAccount;
   id: number;
   amount: number;
   currency: Currency;
@@ -146,4 +185,56 @@ export interface AccountingBalanceOut {
   count_ea: number;
   count_e: number;
   date_snapshot: string;
+}
+
+export interface Transaction {
+  uuid: string;
+  bank: AccountingAccount;
+  companyFinance: { account: AccountingAccount; iban: string; bic?: string };
+  company: { uuid: string; name: string };
+  date: string;
+  amount: string;
+}
+
+export enum TransactionGroupStatus {
+  pending = 1,
+  paid = 2,
+  denied = 3,
+}
+
+export interface TransactionGroupListUnit {
+  total: number;
+  n: number;
+  id: number;
+  status: TransactionGroupStatus;
+  logDateAdded: string;
+  instance: {
+    uuid: string;
+  };
+}
+
+export interface TransactionGroup {
+  id: number;
+  logDateAdded: string;
+  status: TransactionGroupStatus;
+  Payable: Transaction[];
+}
+
+export interface Payable {
+  uuid: string;
+  amount: string;
+  currency: number;
+  date: string;
+  company?: {
+    uuid: string;
+    name: string;
+  };
+  referenceNumber?: string;
+  transactionGroup?: { id: number };
+  bank?: { id: number; name: string; number: number };
+  companyFinance?: {
+    account: { id: number; name: string; number: number };
+    iban?: string;
+    bic?: string;
+  };
 }

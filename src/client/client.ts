@@ -93,7 +93,7 @@ class Client {
       data: { uuid },
     });
 
-  invoiceList = async (): Promise<T.Invoice[]> =>
+  invoiceList = async (): Promise<T.InvoiceListUnit[]> =>
     this.jsonRequest({ path: "/invoice/list" });
 
   // accounting module
@@ -188,6 +188,60 @@ class Client {
       path: "/accounting/entry/delete",
       method: "POST",
       data: { id },
+    });
+
+  fileList = async (data: { payable?: { uuid: string } }) =>
+    this.jsonRequest({ path: "/file/list", data, method: "POST" });
+
+  payableList = async (
+    data: {
+      filters: { isExpense: number };
+    } = {
+      filters: { isExpense: 0 },
+    }
+  ): Promise<T.Payable[]> =>
+    this.jsonRequest({
+      path: "/payable/list",
+      data,
+      method: "POST",
+    });
+
+  payableDetail = async (id: string): Promise<T.Payable> =>
+    this.jsonRequest({ path: "/payable/detail", data: { id }, method: "POST" });
+
+  payableInsert = async (data: {
+    amount: number;
+    company: { uuid: string };
+    paymentProfile: { id: number };
+    date: string;
+    referenceNumber?: string;
+    isExpense: boolean;
+  }): Promise<{ uuid: string }> =>
+    this.jsonRequest({ path: "/payable/insert", data, method: "POST" });
+
+  payableInsertMulti = async (data: any[]): Promise<{ uuid: string }[]> =>
+    this.jsonRequest({
+      path: "/payable/insert-multiple",
+      data: { data },
+      method: "POST",
+    });
+
+  transactionGroupInsert = async (
+    payableUuids: string[]
+  ): Promise<{ id: number }> =>
+    this.jsonRequest({
+      path: "/transaction-group/insert",
+      data: { payables: { uuids: payableUuids } },
+    });
+
+  transactionGroupList = async (): Promise<T.TransactionGroupListUnit[]> =>
+    this.jsonRequest({ path: "/transaction-group/list", method: "GET" });
+
+  transactionGroupDetail = async (id: number): Promise<T.TransactionGroup> =>
+    this.jsonRequest({
+      path: "/transaction-group/detail",
+      data: { id },
+      method: "POST",
     });
 }
 
