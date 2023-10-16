@@ -57,7 +57,7 @@ interface InvoiceBase {
 }
 
 // this pattern is used in different interfaces
-interface Discount {
+export interface Discount {
   discount: number;
   discountAbs: number;
 }
