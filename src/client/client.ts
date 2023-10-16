@@ -331,8 +331,12 @@ class Client {
   // const blob = await f.async("blob");
   // const base64 = await blobToBase64(blob);
   // const data = { base64, filename, ...dataEntity };
-  fileInsert = async (data: { base64: string; filename: string }) =>
-    this.jsonRequest({ path: "/file/upload", data, method: "POST" });
+  fileInsert = async (data: {
+    base64: string;
+    filename: string;
+    mail?: { id: number };
+    payable?: { uuid: string };
+  }) => this.jsonRequest({ path: "/file/upload", data, method: "POST" });
 
   payableList = async (
     data: {
