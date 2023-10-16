@@ -238,3 +238,28 @@ export interface Payable {
     bic?: string;
   };
 }
+
+export interface Company {
+  uuid: string;
+  name: string;
+}
+
+/*export interface Address {
+  id: string;
+  street: string;
+  city: string;
+  zip: string;
+  country: { name: string };
+}*/
+
+export interface PaymentProfile {
+  company: { uuid: string };
+  account: { id: number };
+  iban: string;
+  type: PaymentProfileType;
+}
+
+export enum PaymentProfileType {
+  Iban = 1,
+  QrBill = 2,
+}

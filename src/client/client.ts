@@ -32,14 +32,96 @@ class Client {
 
   viewAPIVersion = async () => this.jsonRequest({ path: "/meta/version" });
   getProfile = async () => this.jsonRequest({ path: "/profile" });
-  companyInsert = async (name: string): Promise<{ uuid: string }> => {
-    const path = "/company/insert";
-    const data = { name };
 
-    return this.jsonRequest({ path, method: "POST", data: { data } });
+  companyInsert = async (
+    data: Pick<T.Company, "name">
+  ): Promise<{ uuid: string }> =>
+    this.jsonRequest({
+      path: "/company/insert",
+      method: "POST",
+      data: { data },
+    });
+
+  companyInsertMultiple = async (
+    data: {
+      name: string;
+      address?: {
+        street: string;
+        city: string;
+        zip: string;
+      };
+    }[]
+  ) =>
+    this.jsonRequest({
+      path: "/company/import",
+      method: "POST",
+      data: { data },
+    });
+
+  // this will insert company / payment profioe and make sure it does not exist yet
+  companyInsertIfNotExists = async (
+    data: Pick<T.Company, "name">,
+    paymentProfile: Omit<T.PaymentProfile, "company">
+  ): Promise<{ uuid: string; paymentProfile: { id: number } }> => {
+    const l = await this.companyList();
+
+    const f = l.find((x) => x.name === data.name);
+
+    if (f) {
+      // check if payment profile exists
+
+      const pList = await this.paymentProfileList({ uuid: f.uuid });
+
+      console.log(pList, paymentProfile.account);
+
+      const fp = pList.find(
+        (x) =>
+          x.account.id === paymentProfile.account.id &&
+          x.iban === paymentProfile.iban &&
+          x.type === paymentProfile.type
+      );
+
+      if (fp) {
+        return { uuid: f.uuid, paymentProfile: { id: fp.id } };
+      }
+
+      const { id } = await this.paymentProfileInsert({
+        ...paymentProfile,
+        company: { uuid: f.uuid },
+      });
+
+      return { uuid: f.uuid, paymentProfile: { id } };
+    }
+
+    const { uuid } = await this.companyInsert(data);
+
+    const { id } = await this.paymentProfileInsert({
+      ...paymentProfile,
+      company: { uuid },
+    });
+
+    return { uuid, paymentProfile: { id } };
   };
 
-  companyList = async () => this.jsonRequest({ path: "/company/list" });
+  companyUpdate = async (id: string, data: Partial<Omit<T.Company, "uuid">>) =>
+    this.jsonRequest({
+      data: { id, data },
+      path: "/company/update",
+      method: "POST",
+    });
+
+  companyList = async (): Promise<T.Company[]> =>
+    this.jsonRequest({ path: "/company/list" });
+
+  companyDetail = async (id: string) =>
+    this.jsonRequest({ path: "/company/detail", data: { id }, method: "POST" });
+
+  companyDeleteById = async (id: string) =>
+    this.jsonRequest({
+      path: `/company/delete`,
+      data: { id },
+      method: "POST",
+    });
 
   //
   addressList = async (data: { company: { uuid: string } }) => {
@@ -61,6 +143,28 @@ class Client {
     return this.jsonRequest({ path, method: "POST", data: { data } });
   };
 
+  paymentProfileList = async (company: {
+    uuid: string;
+  }): Promise<(T.PaymentProfile & { id: number })[]> => {
+    const data = {
+      filters: { company },
+    };
+    return this.jsonRequest({
+      path: "/payment-profile/list",
+      method: "POST",
+      data,
+    });
+  };
+
+  paymentProfileInsert = async (
+    data: Omit<T.PaymentProfile, "id">
+  ): Promise<{ id: number }> =>
+    this.jsonRequest({
+      path: "/payment-profile/insert",
+      method: "POST",
+      data: { data },
+    });
+
   invoiceInsert = async (data: {
     address: { id: number };
     items: T.InvoiceItem[];
@@ -78,7 +182,7 @@ class Client {
     address: T.Address,
     items: T.InvoiceItem[]
   ) => {
-    const { uuid } = await this.companyInsert(companyName);
+    const { uuid } = await this.companyInsert({ name: companyName });
     const { id: addressId } = await this.addressInsert(uuid, address);
     return this.invoiceInsert({ address: { id: addressId }, items });
   };
