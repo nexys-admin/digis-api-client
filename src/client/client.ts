@@ -71,7 +71,7 @@ class Client {
   // this will insert company / payment profioe and make sure it does not exist yet
   companyInsertIfNotExists = async (
     data: Pick<T.Company, "name">,
-    paymentProfile: Omit<T.PaymentProfile, "company">
+    paymentProfile: Omit<T.PaymentProfile, "company" | "id">
   ): Promise<{ uuid: string; paymentProfile: { id: number } }> => {
     const l = await this.companyList();
 
@@ -157,7 +157,7 @@ class Client {
 
   paymentProfileList = async (company: {
     uuid: string;
-  }): Promise<(T.PaymentProfile & { id: number })[]> => {
+  }): Promise<T.PaymentProfile[]> => {
     const data = {
       filters: { company },
     };
@@ -211,6 +211,9 @@ class Client {
 
   invoiceList = async (): Promise<T.InvoiceListUnit[]> =>
     this.jsonRequest({ path: "/invoice/list" });
+
+  invoiceListWAmount = async (): Promise<T.InvoiceWAmount[]> =>
+    this.jsonRequest({ path: "/invoice/list-w-amounts", method: "GET" });
 
   //
   invoiceImport = async (
@@ -382,6 +385,9 @@ class Client {
 
   transactionGroupList = async (): Promise<T.TransactionGroupListUnit[]> =>
     this.jsonRequest({ path: "/transaction-group/list", method: "GET" });
+
+  transactionGroupListWAccounts = async () =>
+    this.jsonRequest({ path: "/transaction-group/list-w-accounts" });
 
   transactionGroupDetail = async (id: number): Promise<T.TransactionGroup> =>
     this.jsonRequest({

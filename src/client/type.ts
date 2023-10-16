@@ -17,6 +17,10 @@ export enum Country {
   Switzerland = 1,
 }
 
+export enum Lang {
+  en = 1,
+}
+
 export enum InvoiceStatus {
   pending = 1,
   sent = 2,
@@ -30,21 +34,32 @@ export interface Address {
   city: string;
   zip: string;
   country: { id: Country };
+  company?: {
+    uuid: string;
+    name: string;
+  };
 }
 
-export interface InvoiceListUnit {
+interface InvoiceBase {
   uuid: string;
-  currency: number;
+  currency: Currency;
   sender: string;
   key: string;
   statusId: InvoiceStatus;
   refNumberInt: number;
-  langId: number;
-  additionalInformation: string;
+  langId: Lang;
+  additionalInformation?: string;
   date: string;
-  dateDue: string | null;
+  dateDue: string;
   logDateAdded: string;
-  vat: number;
+  vat?: number;
+  instance: { uuid: string };
+  address: Address;
+  project: null;
+  id: string;
+}
+
+export interface InvoiceListUnit extends InvoiceBase {
   vatIncluded: null | boolean;
   discount: null | number;
   discountAbs: null | number;
@@ -52,16 +67,7 @@ export interface InvoiceListUnit {
   instance: {
     uuid: string;
   };
-  address: {
-    id: number;
-    street: string;
-    zip: string;
-    city: string;
-    company: {
-      uuid: string;
-      name: string;
-    };
-  };
+  address: Address;
   project: null | any; // You can replace `any` with a more specific type if you have one
   paymentProfile: {
     id: number;
@@ -107,6 +113,12 @@ export interface InvoiceImport {
   totalNoVat: number;
   vat: number;
   checks: InvoiceImportChecks;
+}
+
+export interface InvoiceWAmount extends InvoiceBase {
+  //
+  items: { sum: number; n: number };
+  accountingEntries: AccountingEntry[];
 }
 
 // accounting
@@ -271,19 +283,13 @@ export interface Company {
   name: string;
 }
 
-/*export interface Address {
-  id: string;
-  street: string;
-  city: string;
-  zip: string;
-  country: { name: string };
-}*/
-
 export interface PaymentProfile {
-  company: { uuid: string };
-  account: { id: number };
-  iban: string;
+  id: number;
   type: PaymentProfileType;
+  iban: string;
+  account: { id: number };
+  company: { uuid: string };
+  bankingReferenceNumber?: string;
 }
 
 export enum PaymentProfileType {
