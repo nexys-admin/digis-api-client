@@ -148,11 +148,37 @@ export interface InvoiceWAmount extends InvoiceBase {
 }
 
 // accounting
-export interface AccountingAccount {
+
+export enum AccountFunctionType {
+  bankAccount = 1,
+  vat = 2,
+  salesRevenue = 3,
+  payable = 4,
+  receivable = 5,
+}
+
+export enum AccountType {
+  assets = 1,
+  liability = 2,
+  expenses = 3,
+  revenue = 4,
+  equity = 5,
+}
+
+export interface AccountingAccountListUnit {
   id: number;
+  type: AccountType;
   number: number;
   name: string;
+  currency: Currency;
+  functionType?: AccountFunctionType;
 }
+
+// simpler version of account
+export type AccountingAccount = Pick<
+  AccountingAccountListUnit,
+  "id" | "name" | "number"
+>;
 
 export interface AccountingEntryMeta {
   account: { id: number };
