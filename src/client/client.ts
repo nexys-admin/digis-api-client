@@ -51,7 +51,12 @@ class Client {
         zip: string;
       };
     }[]
-  ) =>
+  ): Promise<{
+    companies: {
+      [name: string]: string;
+    };
+    paymentProfiles: { [uuid: string]: number };
+  }> =>
     this.jsonRequest({
       path: "/company/import",
       method: "POST",
