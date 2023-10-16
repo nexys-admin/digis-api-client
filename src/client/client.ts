@@ -337,12 +337,9 @@ class Client {
       data: { id },
     });
 
-  fileList = async (data: { payable?: { uuid: string } }) =>
-    this.jsonRequest({ path: "/file/list", data, method: "POST" });
+  fileList = async (filters: { payable?: { uuid: string }; name?: string }) =>
+    this.jsonRequest({ path: "/file/list", data: { filters }, method: "POST" });
 
-  // const blob = await f.async("blob");
-  // const base64 = await blobToBase64(blob);
-  // const data = { base64, filename, ...dataEntity };
   fileInsert = async (data: {
     base64: string;
     filename: string;
