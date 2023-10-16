@@ -113,7 +113,7 @@ class Client {
   companyList = async (): Promise<T.Company[]> =>
     this.jsonRequest({ path: "/company/list" });
 
-  companyDetail = async (id: string) =>
+  companyDetail = async (id: string): Promise<T.Company> =>
     this.jsonRequest({ path: "/company/detail", data: { id }, method: "POST" });
 
   companyDeleteById = async (id: string) =>
