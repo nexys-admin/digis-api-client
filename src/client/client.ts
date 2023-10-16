@@ -60,6 +60,7 @@ class Client {
       [name: string]: string;
     };
     paymentProfiles: { [uuid: string]: number };
+    addresses: { [id: string]: number };
   }> =>
     this.jsonRequest({
       path: "/company/import",
