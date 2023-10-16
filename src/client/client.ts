@@ -219,7 +219,7 @@ class Client {
     addresses: { [k: string]: number },
     paymentProfile: { id: number }
   ): Promise<{ response: { uuid: string; items: number }[] }> => {
-    const url = "/api/invoice/import";
+    const url = "/invoice/import";
     const toImport = rows.map(
       mapToDigisInvoice(companies, addresses, paymentProfile)
     );
