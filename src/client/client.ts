@@ -179,7 +179,7 @@ class Client {
 
   invoiceInsert = async (data: {
     address: { id: number };
-    items: T.InvoiceItem[];
+    items: T.InvoiceItemInsert[];
     refNumber?: string;
     refNumberInt?: number;
     status?: T.InvoiceStatus;
@@ -192,14 +192,14 @@ class Client {
   invoiceInsertWithNewCompany = async (
     companyName: string,
     address: Omit<T.Address, "id">,
-    items: T.InvoiceItem[]
+    items: T.InvoiceItemInsert[]
   ) => {
     const { uuid } = await this.companyInsert({ name: companyName });
     const { id: addressId } = await this.addressInsert(uuid, address);
     return this.invoiceInsert({ address: { id: addressId }, items });
   };
 
-  invoiceDetail = async (id: string) =>
+  invoiceDetail = async (id: string): Promise<T.Invoice> =>
     this.jsonRequest({ path: "/invoice/detail", method: "POST", data: { id } });
 
   invoiceDelete = async (uuid: string) =>
@@ -222,7 +222,6 @@ class Client {
     addresses: { [k: string]: number },
     paymentProfile: { id: number }
   ): Promise<{ response: { uuid: string; items: number }[] }> => {
-    const url = "/invoice/import";
     const toImport = rows.map(
       mapToDigisInvoice(companies, addresses, paymentProfile)
     );
@@ -233,6 +232,15 @@ class Client {
       data: { data: toImport },
     });
   };
+
+  invoiceItemInsert = async (
+    data: T.InvoiceItemInsert[]
+  ): Promise<{ uuid: string }> =>
+    this.jsonRequest({
+      path: "/invoice/item/insert",
+      method: "POST",
+      data: { data },
+    });
   //
 
   // accounting module

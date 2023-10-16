@@ -22,7 +22,7 @@ const main = async () => {
   client.getProfile().then(console.log);
 
   // insert a new invoice with a new company, new address
-  const items: T.InvoiceItem[] = [{ label: "d", rate: 23, quantity: 3 }];
+  const items: T.InvoiceItemInsert[] = [{ label: "d", rate: 23, quantity: 3 }];
   const address: Omit<T.Address, "id"> = {
     street: "Route des cerises",
     city: "Morges",

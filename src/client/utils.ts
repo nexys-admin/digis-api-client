@@ -1,4 +1,4 @@
-import { Invoice, InvoiceImport } from "./type";
+import { InvoiceImport } from "./type";
 
 export interface JsonRequestProps<B> {
   path: string;

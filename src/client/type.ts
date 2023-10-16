@@ -34,10 +34,7 @@ export interface Address {
   city: string;
   zip: string;
   country: { id: Country };
-  company?: {
-    uuid: string;
-    name: string;
-  };
+  company?: Pick<Company, "uuid" | "name">;
 }
 
 interface InvoiceBase {
@@ -55,14 +52,30 @@ interface InvoiceBase {
   vat?: number;
   instance: { uuid: string };
   address: Address;
-  project: null;
+  project?: { id: number };
   id: string;
 }
 
-export interface InvoiceListUnit extends InvoiceBase {
+// this pattern is used in different interfaces
+interface Discount {
+  discount: number;
+  discountAbs: number;
+}
+
+export interface Invoice extends InvoiceBase, Partial<Discount> {
+  items: InvoiceItem[];
+  totalWVat: number;
+  total: number;
+  subtotal: number;
+  refNumber: string;
+  vatIncluded?: boolean;
+  paymentUrl?: string;
+  paymentProfile?: Pick<PaymentProfile, "id">;
+  productAccount?: Pick<AccountingAccount, "id">;
+}
+
+export interface InvoiceListUnit extends InvoiceBase, Partial<Discount> {
   vatIncluded: null | boolean;
-  discount: null | number;
-  discountAbs: null | number;
   paymentUrl: string | null;
   instance: {
     uuid: string;
@@ -78,15 +91,28 @@ export interface InvoiceListUnit extends InvoiceBase {
   };
 }
 
-export interface InvoiceItem {
+///
+
+export interface InvoiceItem extends Partial<Discount> {
+  id: number;
+  name: string;
+  description?: string;
+  amount: number;
+  price: number;
+  currency: Currency;
+  fxRate: number;
+  logDateAdded: string;
+  project?: { uuid: string };
+}
+
+export interface InvoiceItemInsert extends Partial<Discount> {
   label: string;
   quantity: number;
   rate: number;
-}
-
-export interface Invoice {
-  id: string;
-  items: InvoiceItem[];
+  invoice?: { uuid: string };
+  project?: {
+    uuid: string;
+  };
 }
 
 export interface InvoiceImportChecks {
