@@ -1,6 +1,10 @@
 // API doc: https://nexys.stoplight.io/docs/digis-accounting-doc/
 
-import { JsonRequestProps, jsonRequestGeneric } from "./utils";
+import {
+  JsonRequestProps,
+  jsonRequestGeneric,
+  mapToDigisInvoice,
+} from "./utils";
 
 import * as T from "./type";
 
@@ -207,6 +211,26 @@ class Client {
   invoiceList = async (): Promise<T.InvoiceListUnit[]> =>
     this.jsonRequest({ path: "/invoice/list" });
 
+  //
+  invoiceImport = async (
+    rows: T.InvoiceImport[],
+    companies: { [k: string]: string },
+    addresses: { [k: string]: number },
+    paymentProfile: { id: number }
+  ): Promise<{ response: { uuid: string; items: number }[] }> => {
+    const url = "/api/invoice/import";
+    const toImport = rows.map(
+      mapToDigisInvoice(companies, addresses, paymentProfile)
+    );
+
+    return this.jsonRequest({
+      path: "/invoice/import",
+      method: "POST",
+      data: { data: toImport },
+    });
+  };
+  //
+
   // accounting module
   accountingAccountList = async (): Promise<T.AccountingAccount[]> => {
     const path = "/accounting/account/list";
@@ -304,6 +328,12 @@ class Client {
   fileList = async (data: { payable?: { uuid: string } }) =>
     this.jsonRequest({ path: "/file/list", data, method: "POST" });
 
+  // const blob = await f.async("blob");
+  // const base64 = await blobToBase64(blob);
+  // const data = { base64, filename, ...dataEntity };
+  fileInsert = async (data: { base64: string; filename: string }) =>
+    this.jsonRequest({ path: "/file/upload", data, method: "POST" });
+
   payableList = async (
     data: {
       filters: { isExpense: number };
@@ -354,6 +384,13 @@ class Client {
       data: { id },
       method: "POST",
     });
+
+  mailInsert = async (data: {
+    title: string;
+    date: string;
+    description?: string;
+  }): Promise<{ id: number }> =>
+    this.jsonRequest({ path: "/mail/insert", method: "POST", data });
 }
 
 export default Client;

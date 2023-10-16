@@ -83,6 +83,32 @@ export interface Invoice {
   items: InvoiceItem[];
 }
 
+export interface InvoiceImportChecks {
+  checkVat: boolean;
+  checkTotal: boolean;
+  checkVatDue: boolean;
+  checkAll: boolean;
+}
+
+export interface InvoiceImport {
+  client: {
+    name: string;
+  };
+  project: {
+    id: number;
+    name: string;
+  };
+  refNumberInt: number;
+  type: string;
+  dateIssued: string | null;
+  datePaid: string | null;
+  total: number;
+  totalWVat: number;
+  totalNoVat: number;
+  vat: number;
+  checks: InvoiceImportChecks;
+}
+
 // accounting
 export interface AccountingAccount {
   id: number;
