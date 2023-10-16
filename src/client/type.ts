@@ -25,6 +25,7 @@ export enum InvoiceStatus {
 }
 
 export interface Address {
+  id: number;
   street: string;
   city: string;
   zip: string;

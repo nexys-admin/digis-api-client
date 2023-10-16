@@ -124,7 +124,9 @@ class Client {
     });
 
   //
-  addressList = async (data: { company: { uuid: string } }) => {
+  addressList = async (data: {
+    company: { uuid: string };
+  }): Promise<T.Address[]> => {
     const path = "/address/list";
     const method = "POST";
     return this.jsonRequest({ path, method, data });
@@ -132,7 +134,7 @@ class Client {
 
   addressInsert = async (
     companyId: string,
-    address: T.Address
+    address: Omit<T.Address, "id">
   ): Promise<{ id: number }> => {
     const path = "/address/insert";
     const data = {
@@ -179,7 +181,7 @@ class Client {
 
   invoiceInsertWithNewCompany = async (
     companyName: string,
-    address: T.Address,
+    address: Omit<T.Address, "id">,
     items: T.InvoiceItem[]
   ) => {
     const { uuid } = await this.companyInsert({ name: companyName });

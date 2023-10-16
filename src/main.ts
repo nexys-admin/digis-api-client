@@ -23,7 +23,7 @@ const main = async () => {
 
   // insert a new invoice with a new company, new address
   const items: T.InvoiceItem[] = [{ label: "d", rate: 23, quantity: 3 }];
-  const address: T.Address = {
+  const address: Omit<T.Address, "id"> = {
     street: "Route des cerises",
     city: "Morges",
     zip: "1111",
