@@ -1,6 +1,6 @@
 {
   "name": "@nexys/digis-api-client",
-  "version": "0.1.11",
+  "version": "0.1.12",
   "license": "MIT",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
