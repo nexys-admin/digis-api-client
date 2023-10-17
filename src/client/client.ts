@@ -405,6 +405,7 @@ class Client {
     this.jsonRequest({
       path: "/transaction-group/insert",
       data: { payables: { uuids: payableUuids } },
+      method: "POST",
     });
 
   transactionGroupList = async (): Promise<T.TransactionGroupListUnit[]> =>
