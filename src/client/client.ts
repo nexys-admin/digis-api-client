@@ -381,9 +381,16 @@ class Client {
     paymentProfile: { id: number };
     date: string;
     referenceNumber?: string;
-    isExpense: boolean;
+    isExpense?: boolean;
+    isCreditCard?: boolean; // to remove?
+    bank?: { id: number };
+    vat?: number;
   }): Promise<{ uuid: string }> =>
-    this.jsonRequest({ path: "/payable/insert", data, method: "POST" });
+    this.jsonRequest({
+      path: "/payable/insert",
+      data: { data },
+      method: "POST",
+    });
 
   payableInsertMulti = async (data: any[]): Promise<{ uuid: string }[]> =>
     this.jsonRequest({
