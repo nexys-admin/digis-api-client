@@ -328,6 +328,7 @@ export interface Payable {
     iban?: string;
     bic?: string;
   };
+  vat?: number;
 }
 
 export interface Company {
