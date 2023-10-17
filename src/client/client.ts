@@ -244,8 +244,14 @@ class Client {
   //
 
   // accounting module
-  accountingAccountList = async (): Promise<T.AccountingAccountListUnit[]> =>
-    this.jsonRequest({ path: "/accounting/account/list", method: "POST" });
+  accountingAccountList = async (filters?: {
+    functionType?: { id: T.AccountFunctionType };
+  }): Promise<T.AccountingAccountListUnit[]> =>
+    this.jsonRequest({
+      path: "/accounting/account/list",
+      method: "POST",
+      data: { filters },
+    });
 
   accountingAccountDetail = async (
     id: number
