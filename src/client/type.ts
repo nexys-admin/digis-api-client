@@ -350,4 +350,12 @@ export interface PaymentProfile {
 export enum PaymentProfileType {
   Iban = 1,
   QrBill = 2,
+  Ethereum = 3,
+  Solana = 4,
+  Arbitrum = 5,
+  Polygon = 6,
+  Goerli = 7,
+  Sepolia = 8,
+  stripe = 10,
+  revolut = 11,
 }
