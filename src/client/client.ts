@@ -401,7 +401,13 @@ class Client {
 
   transactionGroupInsert = async (
     payableUuids: string[]
-  ): Promise<{ id: number }> =>
+  ): Promise<{
+    bankAccount: { id: number };
+    entry: { eas: { ids: number[] }; entry: { id: number } };
+    payables: T.Payable[];
+    responseUpdate: { success: true; updated: number };
+    tgInsertResponse: { id: number };
+  }> =>
     this.jsonRequest({
       path: "/transaction-group/insert",
       data: { payable: { uuids: payableUuids } },
