@@ -329,6 +329,8 @@ export interface Payable {
     bic?: string;
   };
   vat?: number;
+  isExpense?: boolean;
+  isCreditCard?: boolean;
 }
 
 export interface Company {
