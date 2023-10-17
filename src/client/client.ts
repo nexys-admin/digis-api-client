@@ -404,7 +404,7 @@ class Client {
   ): Promise<{ id: number }> =>
     this.jsonRequest({
       path: "/transaction-group/insert",
-      data: { payables: { uuids: payableUuids } },
+      data: { payable: { uuids: payableUuids } },
       method: "POST",
     });
 
