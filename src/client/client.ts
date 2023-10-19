@@ -318,7 +318,7 @@ class Client {
     });
   };
 
-  accountingEntryupdate = (id: number, entry: T.EntryInput) => {
+  accountingEntryupdate = (id: number, entry: Partial<T.EntryInput>) => {
     const { entryAccounts, dateLedger, description } = entry;
 
     const dataToUpdate = {
