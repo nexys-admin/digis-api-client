@@ -267,7 +267,9 @@ class Client {
     return new Map(list.map(({ number, id }) => [number, id]));
   };
 
-  accountingEntryAccountList = async (filters: T.EntryAccountProps) =>
+  accountingEntryAccountList = async (
+    filters: T.EntryAccountProps
+  ): Promise<T.AccountingAccountListUnit[]> =>
     this.jsonRequest({
       path: "/accounting/entry/account/list",
       method: "POST",

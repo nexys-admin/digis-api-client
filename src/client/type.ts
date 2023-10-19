@@ -185,7 +185,7 @@ export interface AccountingEntryMeta {
   company?: { uuid: string };
   invoice?: { uuid: string };
   payable?: { uuid: string };
-  transactionGroup?: { uuid: string };
+  transactionGroup?: { id: string };
   externalReference?: string;
 }
 
@@ -196,11 +196,25 @@ export interface AccountingEntryAccount extends AccountingEntryMeta {
 }
 
 export interface AccountingEntry {
+  id: number;
   description: string;
   dateLedger: string;
   group?: { id: number };
   number?: number;
   entryAccounts: AccountingEntryAccount[];
+}
+
+export interface AccountingEntryAccountListUnit
+  extends Partial<AccountingEntryMeta> {
+  id: number;
+  account: { id: number };
+  amount: number;
+
+  currency: Currency;
+  direction: 1 | -1;
+  exchangeRate?: number;
+  instance: { uuid: string };
+  entry: Pick<AccountingEntry, "id" | "dateLedger" | "description">;
 }
 
 export interface AccountingEntryGroup {
@@ -244,14 +258,14 @@ export interface AccountingEntryAccountMeta {
   company: { uuid: string; name: string };
 }
 
-export interface AccountingEntryAccount2å
+export interface AccountingEntryAccount2
   extends Partial<AccountingEntryAccountMeta> {
   account: AccountingAccount;
   id: number;
   amount: number;
   currency: Currency;
   direction: DebitCredit;
-  exchangeRate: 1;
+  exchangeRate?: number;
   externalReference: null;
 }
 
