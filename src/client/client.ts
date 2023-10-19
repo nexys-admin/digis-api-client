@@ -267,6 +267,9 @@ class Client {
     return new Map(list.map(({ number, id }) => [number, id]));
   };
 
+  accountingEntryList = async () =>
+    this.jsonRequest<any, any>({ path: "/accounting/entry/list" });
+
   accountingEntryAccountList = async (
     filters: T.EntryAccountProps
   ): Promise<T.AccountingAccountListUnit[]> =>
@@ -350,6 +353,26 @@ class Client {
       method: "POST",
       data: { id },
     });
+
+  //
+  accountingLockTransaction = async (entryId: number) =>
+    this.jsonRequest({
+      path: "",
+      method: "POST",
+      data: { endEntry: { id: entryId } },
+    });
+
+  accountingLockList = async () =>
+    this.jsonRequest({ path: "/api/accounting/lock/list" });
+
+  accountingLockDelete = async (uuid: string) =>
+    this.jsonRequest({
+      path: "/api/accounting/lock/delete",
+      method: "POST",
+      data: { uuid },
+    });
+
+  //
 
   fileList = async (filters: { payable?: { uuid: string }; name?: string }) =>
     this.jsonRequest({ path: "/file/list", data: { filters }, method: "POST" });
