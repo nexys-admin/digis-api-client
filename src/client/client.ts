@@ -268,7 +268,10 @@ class Client {
   };
 
   accountingEntryList = async () =>
-    this.jsonRequest<any, any>({ path: "/accounting/entry/list" });
+    this.jsonRequest<any, any>({
+      path: "/accounting/entry/list",
+      method: "POST",
+    });
 
   accountingEntryAccountList = async (
     filters: T.EntryAccountProps

@@ -195,15 +195,6 @@ export interface AccountingEntryAccount extends AccountingEntryMeta {
   originalAmount?: number;
 }
 
-export interface AccountingEntry {
-  id: number;
-  description: string;
-  dateLedger: string;
-  group?: { id: number };
-  number?: number;
-  entryAccounts: AccountingEntryAccount[];
-}
-
 export interface AccountingEntryAccountListUnit
   extends Partial<AccountingEntryMeta> {
   id: number;
@@ -270,10 +261,22 @@ export interface AccountingEntryAccount2
 
 export interface Entry {
   id: number;
-  number: number;
-  dateLedger: string;
+  number?: number;
   description?: string;
+  dateLedger: string;
+  dateAdded: string;
+  group?: { id: number };
+  locked?: { id: number };
   AccountingEntryAccount: AccountingEntryAccount[];
+}
+
+export interface AccountingEntry {
+  id: number;
+  description: string;
+  dateLedger: string;
+  group?: { id: number };
+  number?: number;
+  entryAccounts: AccountingEntryAccount[];
 }
 
 export interface AccountingBalanceOut {
