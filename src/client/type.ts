@@ -185,7 +185,7 @@ export interface AccountingEntryMeta {
   company?: { uuid: string };
   invoice?: { uuid: string };
   payable?: { uuid: string };
-  transactionGroup?: { id: string };
+  transactionGroup?: { id: number };
   externalReference?: string;
 }
 
