@@ -299,6 +299,7 @@ export interface AccountingEntry {
 
 export interface AccountingBalanceOut {
   account_id: number;
+  account_type: AccountType;
   account_number: number;
   account_name: string;
   account_currency_id: number;
