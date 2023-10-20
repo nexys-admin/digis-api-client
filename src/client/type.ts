@@ -8,6 +8,27 @@ export enum Currency {
   USDC = 7,
 }
 
+export interface Profile {
+  id: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  instance: { uuid: string; name: string };
+}
+
+export interface ProfileInstance {
+  uuid: string;
+  email: string;
+  instance: { uuid: string; name: string };
+  UserAuthentication: {}[];
+}
+
+export interface ProfileMailSync {
+  uuid: string;
+  email: string;
+  user: { uuid: string; instance: { uuid: string; name: string } };
+}
+
 export enum DebitCredit {
   debit = 1,
   credit = -1,
