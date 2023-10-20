@@ -241,7 +241,6 @@ export interface EntryAccountProps {
 }
 
 export interface EntryInput {
-  number: number;
   dateLedger: string;
   description?: string;
   entryAccounts: {
