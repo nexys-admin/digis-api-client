@@ -36,7 +36,7 @@ class Client {
 
   viewAPIVersion = async () => this.jsonRequest({ path: "/meta/version" });
 
-  getProfile = async (): Promise<T.Profile> =>
+  profile = async (): Promise<T.Profile> =>
     this.jsonRequest({ path: "/profile" });
 
   profileInstanceList = async (): Promise<T.ProfileInstance[]> =>
@@ -44,6 +44,13 @@ class Client {
 
   profileMailSyncList = async (): Promise<T.ProfileMailSync[]> =>
     this.jsonRequest({ path: "/profile/mail-sync" });
+
+  profileInstanceChange = async (instance: {
+    uuid: string;
+  }): Promise<{ locale: string; permissions: string[]; profile: T.Profile }> =>
+    this.jsonRequest({
+      path: `/auth/instance/change?instanceUuid=${instance.uuid}`,
+    });
 
   companyInsert = async (
     data: Pick<T.Company, "name">
