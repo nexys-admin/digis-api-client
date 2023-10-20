@@ -181,7 +181,7 @@ export type AccountingAccount = Pick<
 >;
 
 export interface AccountingEntryMeta {
-  account: { id: number };
+  account: { id: number; number: number; name: string };
   company?: { uuid: string };
   invoice?: { uuid: string };
   payable?: { uuid: string };
@@ -198,9 +198,7 @@ export interface AccountingEntryAccount extends AccountingEntryMeta {
 export interface AccountingEntryAccountListUnit
   extends Partial<AccountingEntryMeta> {
   id: number;
-  account: { id: number };
   amount: number;
-
   currency: Currency;
   direction: 1 | -1;
   exchangeRate?: number;
@@ -261,8 +259,7 @@ export interface AccountingEntryAccount2
 
 export interface Entry {
   id: number;
-  number?: number;
-  description?: string;
+  description: string;
   dateLedger: string;
   dateAdded: string;
   group?: { id: number };
