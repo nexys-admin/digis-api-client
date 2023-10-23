@@ -20,17 +20,20 @@ export const formatAmount = (
   });
 };
 
-export const displayAmount = (amount?: number): string => {
+export const displayAmount = (
+  amount?: number,
+  locale: string = "fr-CH"
+): string => {
   if (typeof amount !== "number") {
     return "-";
   }
 
   if (amount >= 0) {
-    return formatAmount(amount);
+    return formatAmount(amount, locale);
   }
 
   if (amount < 0) {
-    return `(${formatAmount(Math.abs(amount))})`;
+    return `(${formatAmount(Math.abs(amount), locale)})`;
   }
 
   return "-";

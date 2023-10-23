@@ -19,7 +19,7 @@ const main = async () => {
   const client = new Client({ token });
 
   client.viewAPIVersion().then(console.log);
-  client.getProfile().then(console.log);
+  client.profile().then(console.log);
 
   // insert a new invoice with a new company, new address
   const items: T.InvoiceItemInsert[] = [{ label: "d", rate: 23, quantity: 3 }];
