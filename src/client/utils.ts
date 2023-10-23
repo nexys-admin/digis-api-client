@@ -1,31 +1,56 @@
 import { InvoiceImport } from "./type";
 
-export interface JsonRequestProps<B> {
-  path: string;
-  method?: "GET" | "POST" | "PUT" | "DELETE";
-  data?: B;
-}
+export const getVatRate = (total: number, vat: number) => {
+  if (!vat) {
+    return null;
+  }
+  const r = total / (total - vat) - 1;
 
-export const jsonRequestGeneric =
-  <A, B = any>(
-    url: string,
-    headers: { [k: string]: string },
-    options: { displayRequestStatusLog?: boolean } = {}
-  ) =>
-  async ({
-    path,
-    method = "GET",
-    data = undefined,
-  }: JsonRequestProps<B>): Promise<A> => {
-    const body = data && JSON.stringify(data);
-    const response = await fetch(url + path, { headers, method, body });
+  return Number(r.toFixed(3));
+};
 
-    if (options.displayRequestStatusLog) {
-      console.log("status for path", path, response.status);
-    }
+export const formatAmount = (
+  amount: number | string,
+  locale: string = "fr-CH"
+): string => {
+  const parsedAmount = typeof amount === "string" ? parseFloat(amount) : amount;
+  return parsedAmount.toLocaleString(locale, {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+};
 
-    return response.json();
-  };
+export const displayAmount = (amount?: number): string => {
+  if (typeof amount !== "number") {
+    return "-";
+  }
+
+  if (amount >= 0) {
+    return formatAmount(amount);
+  }
+
+  if (amount < 0) {
+    return `(${formatAmount(Math.abs(amount))})`;
+  }
+
+  return "-";
+};
+
+export const formatDate = (date: string, locale: string = "fr-CH") =>
+  new Date(date).toLocaleDateString(locale);
+
+export const toRef = (
+  id: number,
+  {
+    prefix = "DIGIS",
+    minLength = 6,
+  }: { prefix?: string; minLength?: number } = {}
+) => {
+  const numberString = id.toString();
+  const zerosToAdd = minLength - numberString.length;
+
+  return prefix + "0".repeat(zerosToAdd) + numberString;
+};
 
 export const mapToDigisInvoice =
   (
@@ -54,14 +79,32 @@ export const mapToDigisInvoice =
     };
   };
 
-export const getVatRate = (total: number, vat: number) => {
-  if (!vat) {
-    return null;
-  }
-  const r = total / (total - vat) - 1;
+export interface JsonRequestProps<B> {
+  path: string;
+  method?: "GET" | "POST" | "PUT" | "DELETE";
+  data?: B;
+}
 
-  return Number(r.toFixed(3));
-};
+export const jsonRequestGeneric =
+  <A, B = any>(
+    url: string,
+    headers: { [k: string]: string },
+    options: { displayRequestStatusLog?: boolean } = {}
+  ) =>
+  async ({
+    path,
+    method = "GET",
+    data = undefined,
+  }: JsonRequestProps<B>): Promise<A> => {
+    const body = data && JSON.stringify(data);
+    const response = await fetch(url + path, { headers, method, body });
+
+    if (options.displayRequestStatusLog) {
+      console.log("status for path", path, response.status);
+    }
+
+    return response.json();
+  };
 
 export const blobToBase64 = (blob: Blob): Promise<string> => {
   return new Promise((resolve, reject) => {
