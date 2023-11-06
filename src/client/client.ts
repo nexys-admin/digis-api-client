@@ -476,6 +476,16 @@ class Client {
     description?: string;
   }): Promise<{ id: number }> =>
     this.jsonRequest({ path: "/mail/insert", method: "POST", data });
+
+  bankingIntegrationsReconcile = async (data: {
+    instance: { uuid: string };
+    account: { id: number };
+  }) =>
+    this.jsonRequest({
+      path: "/banking/integrations/reconcile",
+      method: "POST",
+      data,
+    });
 }
 
 export default Client;
