@@ -230,7 +230,6 @@ class Client {
   invoiceListWAmount = async (): Promise<T.InvoiceWAmount[]> =>
     this.jsonRequest({ path: "/invoice/list-w-amounts", method: "GET" });
 
-  //
   invoiceImport = async (
     rows: T.InvoiceImport[],
     companies: { [k: string]: string },
@@ -247,6 +246,18 @@ class Client {
       data: { data: toImport },
     });
   };
+
+  invoiceStatusChange = async (
+    uuid: string,
+    status: T.InvoiceStatus,
+    bankRef?: string,
+    ledgerDate?: string
+  ) =>
+    this.jsonRequest({
+      path: "/invoice/status/change",
+      method: "POST",
+      data: { uuid, status, bankRef, ledgerDate },
+    });
 
   invoiceItemInsert = async (
     data: T.InvoiceItemInsert
