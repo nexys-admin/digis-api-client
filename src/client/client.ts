@@ -249,12 +249,22 @@ class Client {
   };
 
   invoiceItemInsert = async (
-    data: T.InvoiceItemInsert[]
+    data: T.InvoiceItemInsert
   ): Promise<{ uuid: string }> =>
     this.jsonRequest({
       path: "/invoice/item/insert",
       method: "POST",
       data: { data },
+    });
+
+  invoiceItemUpdate = async (
+    data: Omit<T.InvoiceItemInsert, "id">,
+    id: number
+  ) =>
+    this.jsonRequest({
+      path: "/invoice/item/update",
+      method: "POST",
+      data: { data, id },
     });
   //
 
