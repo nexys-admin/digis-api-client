@@ -266,6 +266,13 @@ class Client {
       method: "POST",
       data: { data, id },
     });
+
+  invoiceItemDelete = async (id: number) =>
+    this.jsonRequest({
+      path: "/invoice/item/delete",
+      method: "POST",
+      data: { id },
+    });
   //
 
   // accounting module
