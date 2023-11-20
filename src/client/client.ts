@@ -217,6 +217,13 @@ class Client {
   invoiceDetail = async (id: string): Promise<T.Invoice> =>
     this.jsonRequest({ path: "/invoice/detail", method: "POST", data: { id } });
 
+  invoiceUpdate = async (id: string, data: T.InvoiceUpdate) =>
+    this.jsonRequest({
+      path: "/invoice/update",
+      method: "POST",
+      data: { data, id },
+    });
+
   invoiceDelete = async (uuid: string) =>
     this.jsonRequest({
       path: "/invoice/delete",

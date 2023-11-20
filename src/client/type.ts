@@ -77,6 +77,17 @@ interface InvoiceBase {
   id: string;
 }
 
+export interface InvoiceUpdate extends Partial<Discount> {
+  date?: string;
+  dateDue?: string;
+  additionalInformation?: string;
+  sender?: string;
+  currency?: number;
+  vat?: number;
+  vatIncluded?: boolean;
+  paymentProfile?: { id: number };
+}
+
 // this pattern is used in different interfaces
 export interface Discount {
   discount: number;
