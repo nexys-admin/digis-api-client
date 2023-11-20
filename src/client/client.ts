@@ -250,7 +250,7 @@ class Client {
 
   invoiceItemInsert = async (
     data: T.InvoiceItemInsert
-  ): Promise<{ uuid: string }> =>
+  ): Promise<{ id: number }> =>
     this.jsonRequest({
       path: "/invoice/item/insert",
       method: "POST",
