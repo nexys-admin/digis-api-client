@@ -170,6 +170,16 @@ class Client {
     return this.jsonRequest({ path, method: "POST", data: { data } });
   };
 
+  addressUpdate = async (
+    id: number,
+    data: Pick<T.Address, "street" | "city" | "zip" | "country">
+  ) =>
+    this.jsonRequest({
+      path: "/address/update",
+      data: { id, data },
+      method: "POST",
+    });
+
   addressDelete = async (addressId: number): Promise<void> =>
     this.jsonRequest({
       path: "/address/delete",
