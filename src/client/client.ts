@@ -556,6 +556,23 @@ class Client {
       method: "POST",
     });
 
+  transactionGroupStatusChange = async (
+    id: number,
+    status: T.TransactionGroupStatus
+  ) =>
+    this.jsonRequest({
+      path: "/transaction-group/status/change",
+      method: "POST",
+      data: { id, status },
+    });
+
+  transactionGroupDelete = async (id: number) =>
+    this.jsonRequest({
+      path: "/transaction-group/delete",
+      method: "POST",
+      data: { id },
+    });
+
   mailInsert = async (data: {
     title: string;
     date: string;
