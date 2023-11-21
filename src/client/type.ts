@@ -1,4 +1,4 @@
-export const enum Currency {
+export enum Currency {
   CHF = 1,
   EUR = 2,
   USD = 3,
