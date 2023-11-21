@@ -458,6 +458,9 @@ class Client {
     payable?: { uuid: string };
   }) => this.jsonRequest({ path: "/file/upload", data, method: "POST" });
 
+  fileDelete = async (uuid: string) =>
+    this.jsonRequest({ path: "/file/delete", method: "POST", data: { uuid } });
+
   payableList = async (
     data: {
       filters: { isExpense: number };
