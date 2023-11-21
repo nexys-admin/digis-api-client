@@ -170,6 +170,13 @@ class Client {
     return this.jsonRequest({ path, method: "POST", data: { data } });
   };
 
+  addressDelete = async (addressId: number) =>
+    this.jsonRequest({
+      path: "/address/delete",
+      method: "POST",
+      data: { id: addressId },
+    });
+
   paymentProfileList = async (company: {
     uuid: string;
   }): Promise<T.PaymentProfile[]> => {
