@@ -411,7 +411,7 @@ export enum PaymentProfileType {
 
 export interface File {
   uuid: string;
-
+  name: string;
   contentType?: string;
   size?: number;
 
