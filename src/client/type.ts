@@ -61,6 +61,11 @@ export interface Address {
   company?: Pick<Company, "uuid" | "name">;
 }
 
+export interface Instance {
+  uuid: string;
+  name: string;
+}
+
 interface InvoiceBase {
   uuid: string;
   currency: Currency;
