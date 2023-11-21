@@ -456,6 +456,7 @@ class Client {
     filename: string;
     mail?: { id: number };
     payable?: { uuid: string };
+    company?: { uuid: string };
   }) => this.jsonRequest({ path: "/file/upload", data, method: "POST" });
 
   fileDelete = async (uuid: string) =>
