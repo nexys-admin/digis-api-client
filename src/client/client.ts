@@ -170,7 +170,7 @@ class Client {
     return this.jsonRequest({ path, method: "POST", data: { data } });
   };
 
-  addressDelete = async (addressId: number) =>
+  addressDelete = async (addressId: number): Promise<void> =>
     this.jsonRequest({
       path: "/address/delete",
       method: "POST",
