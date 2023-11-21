@@ -213,6 +213,15 @@ class Client {
     id: number
   ): Promise<{ success: boolean; updated: number }> =>
     this.jsonRequest({
+      path: "/payment-profile/archive",
+      method: "POST",
+      data: { id },
+    });
+
+  paymentProfileDelete = async (
+    id: number
+  ): Promise<{ success: boolean; updated: number }> =>
+    this.jsonRequest({
       path: "/payment-profile/delete",
       method: "POST",
       data: { id },
@@ -512,6 +521,13 @@ class Client {
       method: "POST",
     });
 
+  payableDelete = async (uuid: string) =>
+    this.jsonRequest({
+      path: "/payable/delete",
+      data: { uuid },
+      method: "POST",
+    });
+
   transactionGroupInsert = async (
     payableUuids: string[]
   ): Promise<{
@@ -556,6 +572,30 @@ class Client {
       method: "POST",
       data,
     });
+
+  additionalPropertList = async (filters: {
+    company: { uuid: string };
+  }): Promise<AdditionalProperty[]> =>
+    this.jsonRequest({ path: "/additional-property/list" });
+}
+
+enum AdditionalPropertyType {
+  Text = 1,
+  Email = 2,
+  Phone = 3,
+  Link = 4,
+  Date = 5,
+  Barcode = 6,
+  ReferenceNumber = 7,
+  Amount = 8,
+  InternalLink = 9,
+}
+
+interface AdditionalProperty {
+  id: number;
+  key: string;
+  keyTypeId: AdditionalPropertyType;
+  label: string;
 }
 
 export default Client;
