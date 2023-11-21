@@ -360,7 +360,7 @@ class Client {
 
   accountingEntryAccountList = async (
     filters: T.EntryAccountProps
-  ): Promise<T.AccountingAccountListUnit[]> =>
+  ): Promise<T.AccountingEntryAccountListUnit[]> =>
     this.jsonRequest({
       path: "/accounting/entry/account/list",
       method: "POST",
