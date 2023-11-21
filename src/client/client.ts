@@ -448,7 +448,7 @@ class Client {
     payable?: { uuid: string };
     company?: { uuid: string };
     name?: string;
-  }) =>
+  }): Promise<T.File[]> =>
     this.jsonRequest({ path: "/file/list", data: { filters }, method: "POST" });
 
   fileInsert = async (data: {

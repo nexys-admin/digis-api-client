@@ -408,3 +408,23 @@ export enum PaymentProfileType {
   stripe = 10,
   revolut = 11,
 }
+
+export interface File {
+  uuid: string;
+
+  contentType?: string;
+  size?: number;
+
+  isDefault: boolean;
+  key: string;
+
+  typeId: 1;
+
+  company?: { uuid: string };
+  payable: { uuid: string };
+  mail: { uuid: string };
+  invoice?: { uuid: string };
+
+  logDateAdded: string;
+  logUser: { uuid: string };
+}
