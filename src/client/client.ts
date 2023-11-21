@@ -209,6 +209,15 @@ class Client {
       data: { data },
     });
 
+  paymentProfileArchive = async (
+    id: number
+  ): Promise<{ success: boolean; updated: number }> =>
+    this.jsonRequest({
+      path: "/payment-profile/delete",
+      method: "POST",
+      data: { id },
+    });
+
   invoiceInsert = async (data: {
     address: { id: number };
     items: T.InvoiceItemInsert[];
@@ -457,7 +466,8 @@ class Client {
     mail?: { id: number };
     payable?: { uuid: string };
     company?: { uuid: string };
-  }) => this.jsonRequest({ path: "/file/upload", data, method: "POST" });
+  }): Promise<{ uuid: string }> =>
+    this.jsonRequest({ path: "/file/upload", data, method: "POST" });
 
   fileDelete = async (uuid: string) =>
     this.jsonRequest({ path: "/file/delete", method: "POST", data: { uuid } });
