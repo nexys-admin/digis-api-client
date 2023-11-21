@@ -444,7 +444,11 @@ class Client {
 
   //
 
-  fileList = async (filters: { payable?: { uuid: string }; name?: string }) =>
+  fileList = async (filters: {
+    payable?: { uuid: string };
+    company?: { uuid: string };
+    name?: string;
+  }) =>
     this.jsonRequest({ path: "/file/list", data: { filters }, method: "POST" });
 
   fileInsert = async (data: {
