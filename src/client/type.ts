@@ -1,11 +1,14 @@
-export enum Currency {
+export const enum Currency {
   CHF = 1,
-  USD = 2,
-  EUR = 3,
+  EUR = 2,
+  USD = 3,
   GBP = 4,
   USDT = 5,
-  SOL = 6,
-  USDC = 7,
+  USDC = 6,
+  ETH = 7,
+  BTC = 8,
+  SOL = 9,
+  EURT = 10,
 }
 
 export interface Profile {

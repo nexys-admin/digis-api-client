@@ -11,17 +11,24 @@ export const getVatRate = (total: number, vat: number) => {
 
 export const formatAmount = (
   amount: number | string,
+  fractionDigits: number = 2,
   locale: string = "fr-CH"
 ): string => {
+  // never display -0
+  if (amount == -0) {
+    amount = 0;
+  }
+
   const parsedAmount = typeof amount === "string" ? parseFloat(amount) : amount;
   return parsedAmount.toLocaleString(locale, {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
+    minimumFractionDigits: fractionDigits,
+    maximumFractionDigits: fractionDigits,
   });
 };
 
 export const displayAmount = (
   amount?: number,
+  fractionDigits: number = 2,
   locale: string = "fr-CH"
 ): string => {
   if (typeof amount !== "number") {
@@ -29,11 +36,11 @@ export const displayAmount = (
   }
 
   if (amount >= 0) {
-    return formatAmount(amount, locale);
+    return formatAmount(amount, fractionDigits, locale);
   }
 
   if (amount < 0) {
-    return `(${formatAmount(Math.abs(amount), locale)})`;
+    return `(${formatAmount(Math.abs(amount), fractionDigits, locale)})`;
   }
 
   return "-";
