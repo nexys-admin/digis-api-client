@@ -396,6 +396,7 @@ export interface PaymentProfile {
   id: number;
   type: PaymentProfileType;
   iban: string;
+  bic?: string;
   account: { id: number };
   company: { uuid: string };
   bankingReferenceNumber?: string;
