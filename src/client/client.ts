@@ -638,9 +638,13 @@ class Client {
 
   mailUpdate = async (
     id: number,
-    data: { status: T.MailStatus; company: { uuid: string } }
+    data: { status: T.MailStatus; company?: { uuid: string } }
   ): Promise<{ success: boolean; updated: number }> =>
-    this.jsonRequest({ path: "", method: "POST", data: { id, data } });
+    this.jsonRequest({
+      path: "/mail/insert",
+      method: "POST",
+      data: { id, data },
+    });
 
   bankingIntegrationsReconcile = async (data: {
     instance: { uuid: string };
