@@ -641,7 +641,7 @@ class Client {
     data: { status: T.MailStatus; company?: { uuid: string } }
   ): Promise<{ success: boolean; updated: number }> =>
     this.jsonRequest({
-      path: "/mail/insert",
+      path: "/mail/update",
       method: "POST",
       data: { id, data },
     });
