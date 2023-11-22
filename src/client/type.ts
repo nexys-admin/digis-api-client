@@ -454,3 +454,19 @@ export interface AdditionalProperty {
   keyTypeId: AdditionalPropertyType;
   label: string;
 }
+
+export enum MailStatus {
+  pending = 1,
+  processed = 2,
+  refused = 3,
+}
+
+export interface Mail {
+  id: number;
+  date: string;
+  company?: { uuid: string };
+  description?: string;
+  payable?: { uuid: string };
+  statusId: MailStatus;
+  title: string;
+}

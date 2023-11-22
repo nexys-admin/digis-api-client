@@ -599,12 +599,48 @@ class Client {
       data,
     });
 
-  mailInsert = async (data: {
-    title: string;
-    date: string;
-    description?: string;
-  }): Promise<{ id: number }> =>
+  transactionsList = async (data: {
+    account: { id: number };
+    endDate: string;
+    startDate: string;
+  }): Promise<
+    {
+      account: { id: number };
+      amount: string;
+      balance: string;
+      bookingDate: string;
+      counterpartAddress: null | string;
+      counterpartIban: string;
+      counterpartName: string;
+      direction: number;
+      externalId?: string;
+      label?: string;
+      message?: string;
+      messageIsStructured?: boolean;
+      reference: string;
+      uuid: string;
+      valueDate: string;
+    }[]
+  > =>
+    this.jsonRequest({
+      path: "/banking/integrations/transactions",
+      method: "POST",
+      data,
+    });
+
+  mailList = async (): Promise<T.Mail[]> =>
+    this.jsonRequest({ path: "/mail/list" });
+
+  mailInsert = async (
+    data: Pick<T.Mail, "title" | "date" | "description">
+  ): Promise<{ id: number }> =>
     this.jsonRequest({ path: "/mail/insert", method: "POST", data });
+
+  mailUpdate = async (
+    id: number,
+    data: { status: T.MailStatus; company: { uuid: string } }
+  ): Promise<{ success: boolean; updated: number }> =>
+    this.jsonRequest({ path: "", method: "POST", data: { id, data } });
 
   bankingIntegrationsReconcile = async (data: {
     instance: { uuid: string };
