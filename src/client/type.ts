@@ -434,3 +434,22 @@ export interface File {
   logDateAdded: string;
   logUser: { uuid: string };
 }
+
+export enum AdditionalPropertyType {
+  Text = 1,
+  Email = 2,
+  Phone = 3,
+  Link = 4,
+  Date = 5,
+  Barcode = 6,
+  ReferenceNumber = 7,
+  Amount = 8,
+  InternalLink = 9,
+}
+
+export interface AdditionalProperty {
+  id: number;
+  key: string;
+  keyTypeId: AdditionalPropertyType;
+  label: string;
+}

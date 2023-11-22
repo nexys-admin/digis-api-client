@@ -573,6 +573,19 @@ class Client {
       data: { id },
     });
 
+  paymentInsert = async (data: {
+    account: Pick<T.AccountingAccount, "id">;
+    creditors: { name: string; amount: number; iban: string; bic?: string }[];
+    debtor: { name: string; iban: string; bic?: string };
+    paymentId: string;
+    token: string;
+  }) =>
+    this.jsonRequest({
+      path: "/banking/integrations/payment/insert",
+      method: "POST",
+      data,
+    });
+
   mailInsert = async (data: {
     title: string;
     date: string;
@@ -592,27 +605,31 @@ class Client {
 
   additionalPropertList = async (filters: {
     company: { uuid: string };
-  }): Promise<AdditionalProperty[]> =>
-    this.jsonRequest({ path: "/additional-property/list" });
-}
+  }): Promise<T.AdditionalProperty[]> =>
+    this.jsonRequest({
+      path: "/additional-property/list",
+      method: "POST",
+      data: { filters },
+    });
 
-enum AdditionalPropertyType {
-  Text = 1,
-  Email = 2,
-  Phone = 3,
-  Link = 4,
-  Date = 5,
-  Barcode = 6,
-  ReferenceNumber = 7,
-  Amount = 8,
-  InternalLink = 9,
-}
+  additionalPropertyInsert = async (
+    data: Omit<T.AdditionalProperty, "id">,
+    company: { uuid: string }
+  ): Promise<T.AdditionalProperty[]> =>
+    this.jsonRequest({
+      path: "/additional-property/insert",
+      method: "POST",
+      data: { ...data, company },
+    });
 
-interface AdditionalProperty {
-  id: number;
-  key: string;
-  keyTypeId: AdditionalPropertyType;
-  label: string;
+  additionalPropertyDelete = async (data: {
+    id: number;
+  }): Promise<T.AdditionalProperty[]> =>
+    this.jsonRequest({
+      path: "/additional-property/delete",
+      method: "POST",
+      data,
+    });
 }
 
 export default Client;
