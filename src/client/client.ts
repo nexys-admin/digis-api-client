@@ -42,10 +42,8 @@ class Client {
   profileInstanceList = async (): Promise<T.ProfileInstance[]> =>
     this.jsonRequest({ path: "/instance/list" });
 
-  instanceInfo = async (): Promise<T.Instance & { address: T.Address }> => {
-    const r = await fetch("/instance/detail");
-    return r.json();
-  };
+  instanceInfo = async (): Promise<T.Instance & { address: T.Address }> =>
+    this.jsonRequest({ path: "/instance/detail" });
 
   profileMailSyncList = async (): Promise<T.ProfileMailSync[]> =>
     this.jsonRequest({ path: "/profile/mail-sync" });
@@ -466,11 +464,11 @@ class Client {
     });
 
   accountingLockList = async () =>
-    this.jsonRequest({ path: "/api/accounting/lock/list" });
+    this.jsonRequest({ path: "/accounting/lock/list" });
 
   accountingLockDelete = async (uuid: string) =>
     this.jsonRequest({
-      path: "/api/accounting/lock/delete",
+      path: "/accounting/lock/delete",
       method: "POST",
       data: { uuid },
     });
