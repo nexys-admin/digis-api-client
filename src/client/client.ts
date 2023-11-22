@@ -42,6 +42,11 @@ class Client {
   profileInstanceList = async (): Promise<T.ProfileInstance[]> =>
     this.jsonRequest({ path: "/instance/list" });
 
+  instanceInfo = async (): Promise<T.Instance & { address: T.Address }> => {
+    const r = await fetch("/instance/detail");
+    return r.json();
+  };
+
   profileMailSyncList = async (): Promise<T.ProfileMailSync[]> =>
     this.jsonRequest({ path: "/profile/mail-sync" });
 
