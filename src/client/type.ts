@@ -402,6 +402,7 @@ export interface PaymentProfile {
 }
 
 export enum PaymentProfileType {
+  Expense = 0,
   Iban = 1,
   QrBill = 2,
   Ethereum = 3,
@@ -410,8 +411,8 @@ export enum PaymentProfileType {
   Polygon = 6,
   Goerli = 7,
   Sepolia = 8,
-  stripe = 10,
-  revolut = 11,
+  Stripe = 10,
+  Revolut = 11,
 }
 
 export interface File {
