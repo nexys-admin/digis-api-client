@@ -209,6 +209,16 @@ class Client {
       data: { data },
     });
 
+  paymentProfileByAccount = async (data: {
+    account: { id: number };
+    company: { uuid: string };
+  }): Promise<T.PaymentProfile> =>
+    this.jsonRequest({
+      path: "/payment-profile/by-account",
+      method: "POST",
+      data,
+    });
+
   paymentProfileArchive = async (
     id: number
   ): Promise<{ success: boolean; updated: number }> =>
