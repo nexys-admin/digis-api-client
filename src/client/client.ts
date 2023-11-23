@@ -100,8 +100,6 @@ class Client {
 
       const pList = await this.paymentProfileList({ uuid: f.uuid });
 
-      console.log(pList, paymentProfile.account);
-
       const fp = pList.find(
         (x) =>
           x.account.id === paymentProfile.account.id &&

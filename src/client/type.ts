@@ -395,7 +395,7 @@ export interface Company {
 export interface PaymentProfile {
   id: number;
   type: PaymentProfileType;
-  iban: string;
+  iban?: string;
   bic?: string;
   account: { id: number };
   company: { uuid: string };
