@@ -103,7 +103,7 @@ class Client {
       const fp = pList.find(
         (x) =>
           x.account.id === paymentProfile.account.id &&
-          x.iban === paymentProfile.iban &&
+          x.iban === (paymentProfile.iban || null) &&
           x.type === paymentProfile.type
       );
 
