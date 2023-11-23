@@ -367,6 +367,13 @@ class Client {
       method: "POST",
     });
 
+  accountingAccountDelete = async (id: number): Promise<{ id: number }> =>
+    this.jsonRequest({
+      path: "/accounting/account/delete",
+      data: { id },
+      method: "POST",
+    });
+
   accountingAccountsMap = async () => {
     const list = await this.accountingAccountList();
     return new Map(list.map(({ number, id }) => [number, id]));
