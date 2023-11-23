@@ -363,7 +363,7 @@ class Client {
   ): Promise<{ id: number }> =>
     this.jsonRequest({
       path: "/accounting/account/insert",
-      data,
+      data: { data },
       method: "POST",
     });
 
