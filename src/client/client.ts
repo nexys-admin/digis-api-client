@@ -497,12 +497,11 @@ class Client {
       data: { uuid },
     });
 
-  //
-
   fileList = async (filters: {
     payable?: { uuid: string };
     company?: { uuid: string };
     name?: string;
+    mail?: { id: { $in: number[] } };
   }): Promise<T.File[]> =>
     this.jsonRequest({ path: "/file/list", data: { filters }, method: "POST" });
 
