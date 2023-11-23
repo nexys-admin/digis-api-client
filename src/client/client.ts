@@ -362,7 +362,7 @@ class Client {
     data: Omit<T.AccountingAccountListUnit, "id">
   ): Promise<{ id: number }> =>
     this.jsonRequest({
-      path: "/accounting/account/detail",
+      path: "/accounting/account/insert",
       data,
       method: "POST",
     });
@@ -503,9 +503,9 @@ class Client {
 
   payableList = async (
     data: {
-      filters: { isExpense: number };
+      filters: { isExpense?: number };
     } = {
-      filters: { isExpense: 0 },
+      filters: {},
     }
   ): Promise<T.Payable[]> =>
     this.jsonRequest({
