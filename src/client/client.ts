@@ -351,7 +351,7 @@ class Client {
 
   accountingAccountDetail = async (
     id: number
-  ): Promise<T.AccountingAccountListUnit[]> =>
+  ): Promise<T.AccountingAccountListUnit> =>
     this.jsonRequest({
       path: "/accounting/account/detail",
       data: { id },
@@ -364,6 +364,16 @@ class Client {
     this.jsonRequest({
       path: "/accounting/account/insert",
       data: { data },
+      method: "POST",
+    });
+
+  accountingAccountUpdate = async (
+    id: number,
+    data: Omit<T.AccountingAccountListUnit, "id">
+  ): Promise<{ id: number }> =>
+    this.jsonRequest({
+      path: "/accounting/account/update",
+      data: { data, id },
       method: "POST",
     });
 
