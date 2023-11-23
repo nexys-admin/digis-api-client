@@ -94,6 +94,7 @@ export interface InvoiceUpdate extends Partial<Discount> {
   vat?: number;
   vatIncluded?: boolean;
   paymentProfile?: { id: number };
+  productAccount?: { id: number };
 }
 
 // this pattern is used in different interfaces
