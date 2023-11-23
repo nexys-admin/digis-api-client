@@ -358,6 +358,15 @@ class Client {
       method: "POST",
     });
 
+  accountingAccountInsert = async (
+    data: Omit<T.AccountingAccountListUnit, "id">
+  ): Promise<{ id: number }> =>
+    this.jsonRequest({
+      path: "/accounting/account/detail",
+      data,
+      method: "POST",
+    });
+
   accountingAccountsMap = async () => {
     const list = await this.accountingAccountList();
     return new Map(list.map(({ number, id }) => [number, id]));
