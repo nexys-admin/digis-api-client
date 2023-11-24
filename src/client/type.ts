@@ -150,6 +150,7 @@ export interface InvoiceItemInsert extends Partial<Discount> {
   label: string;
   quantity: number;
   rate: number;
+  currency?: Currency;
   invoice?: { uuid: string };
   project?: {
     uuid: string;
