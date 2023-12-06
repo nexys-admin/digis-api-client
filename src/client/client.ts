@@ -514,6 +514,18 @@ class Client {
   }): Promise<{ uuid: string }> =>
     this.jsonRequest({ path: "/file/upload", data, method: "POST" });
 
+  fileUpdate = async (
+    data: Partial<{
+      filename: string;
+      mail: { id: number };
+      company: { uuid: string };
+      user: { uuid: string };
+      project: { uuid: string };
+      invoice: { uuid: string };
+      payable: { uuid: string };
+    }>
+  ) => this.jsonRequest({ path: "/file/update", data, method: "POST" });
+
   fileDelete = async (uuid: string) =>
     this.jsonRequest({ path: "/file/delete", method: "POST", data: { uuid } });
 
